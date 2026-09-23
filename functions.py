@@ -12,7 +12,6 @@ from selenium.common.exceptions import NoAlertPresentException
 from locators import *
 
 file_download_path = Path("C:/Users/" + getpass.getuser() + "/Downloads/")
-file_to_upload = Path("C:/Users/" + getpass.getuser() + "/test_file.jpg")
 
 
 class Common():
