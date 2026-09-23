@@ -1,6 +1,6 @@
 import unittest
 from functions import *
-from selectors import *
+from locators import *
 
 
 class TestCasesTheInternetHerokuapp(unittest.TestCase):
@@ -61,7 +61,7 @@ class TestCasesTheInternetHerokuapp(unittest.TestCase):
 
     def test_file_upload(self):
         self.action.upload_file()
-        self.assertEqual('test_file.jpg',
+        self.assertEqual('test_file.txt',
                          self.action.driver.find_element(By.XPATH, file_upload_result).get_attribute('innerText'),
                          'Upload failed!')
 

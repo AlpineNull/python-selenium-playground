@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver import ActionChains
 from selenium.common.exceptions import NoAlertPresentException
-from selectors import *
+from locators import *
 
 file_download_path = Path("C:/Users/" + getpass.getuser() + "/Downloads/")
 file_to_upload = Path("C:/Users/" + getpass.getuser() + "/test_file.jpg")
@@ -123,8 +123,26 @@ class Actions(Common):
         self.search_for_click('Typos')
 
     def upload_file(self):
-        self.search_for_click('File Upload')
-        WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, file_upload_input)))
-        self.driver.find_element(By.XPATH, file_upload_input).send_keys(str(file_to_upload))
-        self.driver.find_element(By.XPATH, file_upload_button).click()
-        WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, file_upload_result)))
+        file_to_upload = Path("test_file.txt")
+        file_to_upload.touch()
+
+        try:
+            self.search_for_click('File Upload')
+            WebDriverWait(self.driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, file_upload_input))
+            )
+            self.driver.find_element(
+                By.XPATH,
+                file_upload_input
+            ).send_keys(str(file_to_upload.resolve()))
+
+            self.driver.find_element(
+                By.XPATH,
+                file_upload_button
+            ).click()
+
+            WebDriverWait(self.driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, file_upload_result))
+            )
+        finally:
+            file_to_upload.unlink(missing_ok=True)
