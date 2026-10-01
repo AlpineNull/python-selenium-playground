@@ -19,8 +19,10 @@ class Common():
     def __init__(self):
         self.driver = webdriver.Chrome()
 
-    def wait_click(self, target, wait_time=30, selector_type=By.XPATH):
-        WebDriverWait(self.driver, wait_time).until(EC.presence_of_element_located((selector_type, target)))
+    def wait_click(self, target, wait_time=30):
+        WebDriverWait(self.driver, wait_time).until(
+            EC.presence_of_element_located((By.XPATH, target))
+        )
         self.driver.find_element(By.XPATH, target).click()
 
     def search_for_click(self, value):
