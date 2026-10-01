@@ -97,6 +97,16 @@ class Actions(Common):
         except NoAlertPresentException:
             return True
 
+    def delete_downloaded_file(self):
+        downloaded_file = (
+                file_download_path
+                / self.driver.find_element(
+            By.XPATH,
+            file_to_download
+        ).text
+        )
+        downloaded_file.unlink(missing_ok=True)
+
     def download_file(self):
         self.search_for_click('File Download')
         self.wait_click(file_to_download)
