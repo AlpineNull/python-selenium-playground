@@ -41,9 +41,9 @@ class TestCasesTheInternetHerokuapp(unittest.TestCase):
                          'Second dismissal of alert succeeded, the first one probably failed.')
 
     def test_download_file(self):
-        self.action.download_file()
+        downloaded_file = self.action.download_file()
+        self.addCleanup(self.action.delete_downloaded_file, downloaded_file)
         self.assertTrue(self.action.does_file_exist())
-        self.action.delete_downloaded_file()
 
     def test_forgot_password(self):
         self.action.forgot_password()
